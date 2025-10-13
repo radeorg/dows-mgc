@@ -1,0 +1,27 @@
+spring:
+  profiles:
+    include: ai,cache
+    active: dev
+
+  freemarker:
+    template-loader-path: classpath:/templates
+    cache: false
+    charset: UTF-8
+    check-template-location: true
+    content-type: text/html
+    expose-request-attributes: true
+    expose-session-attributes: true
+    request-context-attribute: request
+    suffix: .ftl
+    settings:
+      number_format: '0.##'
+  datasource:
+    url: jdbc:h2:file:./data/testdb;AUTO_SERVER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jmx:
+    enabled: false
+logging:
+  level:
+    root: debug

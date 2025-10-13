@@ -1,0 +1,7 @@
+spring:
+  cache:
+    type: caffeine
+    cache-names:
+      - userCache
+    caffeine:
+      spec: maximumSize=1024,refreshAfterWrite=60s
