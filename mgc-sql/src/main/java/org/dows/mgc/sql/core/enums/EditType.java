@@ -7,6 +7,7 @@ public enum EditType {
 
     TEXT("TEXT"),
     TEXTAREA("TEXTAREA"),
+    RADIO("RADIO"),
     PASSWORD("PASSWORD"),
     NUMBER("NUMBER"),
     CHECKBOX("CHECKBOX"),

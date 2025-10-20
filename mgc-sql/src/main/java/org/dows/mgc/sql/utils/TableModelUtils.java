@@ -1,7 +1,5 @@
 package org.dows.mgc.sql.utils;
 
-//import cn.wubo.entity.sql.cache.CacheHelper;
-
 import org.dows.mgc.sql.core.annotations.Column;
 import org.dows.mgc.sql.core.annotations.Table;
 import org.dows.mgc.sql.core.model.ColumnModel;

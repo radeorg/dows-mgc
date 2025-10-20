@@ -73,9 +73,9 @@ public class DatabaseUtils {
         } else if (targetType == LocalDateTime.class) {
             String v = value.toString();
             if (v.length() == 10) {
-                v += " 00:00:00.000";
+                v += " 00:00:00";
             }
-            return LocalDate.parse(v, TIMESTAMP_FORMATTER);
+            return LocalDate.parse(v, DATE_TIME_FORMATTER);
         } else if (targetType == Timestamp.class) {
             return Timestamp.from(LocalDateTime.parse(value.toString(), TIMESTAMP_FORMATTER).atZone(java.time.ZoneId.systemDefault()).toInstant());
         } else {
@@ -107,7 +107,7 @@ public class DatabaseUtils {
             return ((LocalDate) value).format(DATE_FORMATTER);
             // 浮点数类型去除末尾的0和小数点
         } else if (value instanceof LocalDateTime) {
-            return ((LocalDateTime) value).format(TIMESTAMP_FORMATTER);
+            return ((LocalDateTime) value).format(DATE_TIME_FORMATTER);
             // 浮点数类型去除末尾的0和小数点
         } else if (value instanceof Float || value instanceof Double) {
             return StringUtils.subZeroAndDot(String.valueOf(value));
