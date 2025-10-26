@@ -1,4 +1,4 @@
-package org.dows.mgc.controller;
+package org.dows.mgc.rest;
 
 import org.dows.mgc.common.BaseResponse;
 import org.dows.mgc.common.ResultUtils;

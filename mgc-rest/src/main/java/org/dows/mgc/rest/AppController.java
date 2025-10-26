@@ -1,4 +1,4 @@
-package org.dows.mgc.controller;
+package org.dows.mgc.rest;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
@@ -74,7 +74,7 @@ public class AppController {
      * @return 生成结果流
      */
     @GetMapping(value = "/chat/gen/code", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    @RateLimit(limitType = RateLimitType.USER, rate = 5, vipRate = 20, rateInterval = 60, enableVipDifferentiation = true, message = "AI对话请求过于频繁，请稍后再试。升级VIP可享有更高频率限制", vipMessage = "VIP用户AI对话请求过于频繁，请稍后再试")
+    @RateLimit(limitType = RateLimitType.USER, rate = 100, vipRate = 200, rateInterval = 60, enableVipDifferentiation = true, message = "AI对话请求过于频繁，请稍后再试。升级VIP可享有更高频率限制", vipMessage = "VIP用户AI对话请求过于频繁，请稍后再试")
     public Flux<ServerSentEvent<String>> chatToGenCode(@RequestParam Long appId,
                                                        @RequestParam String message,
                                                        HttpServletRequest request) {
@@ -144,8 +144,8 @@ public class AppController {
      * @return 新应用的 ID
      */
     @PostMapping("/add")
-    @RateLimit(limitType = RateLimitType.USER, rate = 5, // 普通用户每小时5次
-            vipRate = 20, // VIP用户每小时20次
+    @RateLimit(limitType = RateLimitType.USER, rate = 50, // 普通用户每小时5次
+            vipRate = 100, // VIP用户每小时20次
             rateInterval = 3600, enableVipDifferentiation = true, message = "创建应用过于频繁，普通用户每小时最多创建5个应用", vipMessage = "创建应用过于频繁，VIP用户每小时最多创建20个应用")
     public BaseResponse<Long> addApp(@RequestBody AppAddRequest appAddRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(appAddRequest == null, ErrorCode.PARAMS_ERROR);

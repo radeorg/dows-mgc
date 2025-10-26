@@ -5,14 +5,14 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/static/css/chat.css"/>
+    <link rel="stylesheet" type="text/css" href="/api/css/chat.css"/>
 </head>
 <body>
 <div class="container">
     <div class="content">
         <div class="item item-center"><span>快速构建单表维护</span></div>
         <div class="item item-left">
-            <div class="avatar"><img src="/META-INF/resources/static/assets/ai1.png"/></div>
+            <div class="avatar"><img src="/api/assets/ai.png"/></div>
             <div class="bubble bubble-left">请告诉我您的需求吧，我会根据您的需求帮您构建单表维护界面</div>
         </div>
     </div>
@@ -48,7 +48,7 @@
         // user
         let userItem = document.createElement('div');
         userItem.className = 'item item-right';
-        userItem.innerHTML = `<div class="bubble bubble-left">` + text + `</div><div class="avatar"><img src="/META-INF/resources/static/assets/user1.png"/></div>`;
+        userItem.innerHTML = `<div class="bubble bubble-left">` + text + `</div><div class="avatar"><img src="/api/assets/user.png"/></div>`;
         content.appendChild(userItem);
 
         //滚动条置底
@@ -69,7 +69,7 @@
         let assistantItem = document.createElement('div');
         assistantItem.className = 'item item-left';
         assistantItem.innerHTML = `<div class="avatar">
-                                        <img src="/META-INF/resources/static/assets/ai1.png"/>
+                                        <img src="/api/assets/ai.png"/>
                                    </div>
                                    <div class="bubble bubble-left" id="` + id + `">
                                         <span id="` + id_think + `" style="color: #999999"></span>
@@ -80,7 +80,7 @@
         let thinkItem = document.getElementById(id_think);
         let textItem = document.getElementById(id_text);
 
-        const eventSource = new EventSource('/mgc/buildRequirement?text=' + text);
+        const eventSource = new EventSource('/api/mgc/buildRequirement?text=' + text);
 
         eventSource.onmessage = (event) => {
             let message = event.data.substring(1, event.data.length - 1);
@@ -149,7 +149,7 @@
         let assistantItem = document.createElement('div');
         assistantItem.className = 'item item-left';
         assistantItem.innerHTML = `<div class="avatar">
-                                        <img src="/META-INF/resources/static/assets/ai1.png"/>
+                                        <img src="/api/assets/ai.png"/>
                                    </div>
                                    <div class="bubble bubble-left" id="` + id + `">
                                         <span id="` + id_think + `" style="color: #999999"></span>
@@ -160,7 +160,7 @@
         let thinkItem = document.getElementById(id_think);
         let textItem = document.getElementById(id_text);
 
-        const eventSource = new EventSource('/mgc/buildClass?text=' + text);
+        const eventSource = new EventSource('/api/mgc/buildClass?text=' + text);
 
         eventSource.onmessage = (event) => {
             let message = event.data.substring(1, event.data.length - 1);
@@ -178,7 +178,7 @@
                 button.addEventListener('click', function () {
                     console.log("加载功能")
 
-                    fetch('/mgc/buildWeb', {
+                    fetch('/api/mgc/buildWeb', {
                         method: 'POST',
                         headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify({text: textItem.textContent}),
@@ -192,7 +192,7 @@
                         .then(json => {
                             let assistantItem = document.createElement('div');
                             assistantItem.className = 'item item-left';
-                            assistantItem.innerHTML = `<div class="avatar"><img src="/META-INF/resources/static/assets/ai1.png"/></div><div class="bubble bubble-left"><a href="/entity/view/` + json.id + `" target="_blank">` + `打开页面` + `</a></div>`;
+                            assistantItem.innerHTML = `<div class="avatar"><img src="/api/assets/ai.png"/></div><div class="bubble bubble-left"><a href="/api/entity/view/` + json.id + `" target="_blank">` + `打开页面` + `</a></div>`;
                             document.querySelector('.content').appendChild(assistantItem);
 
                             textarea.disabled = false;

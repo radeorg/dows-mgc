@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CodeQualityCheckServiceFactory {
 
-    @Resource(name = "langchainOpenAiChatModel")
+    @Resource(name = "openAiChatModel")
     private ChatModel chatModel;
 
     public CodeQualityCheckService createService() {

@@ -1,4 +1,4 @@
-package org.dows.mgc.controller;
+package org.dows.mgc.rest;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.mybatisflex.core.paginate.Page;

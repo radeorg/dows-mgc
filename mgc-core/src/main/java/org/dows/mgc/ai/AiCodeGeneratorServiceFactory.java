@@ -47,7 +47,7 @@ public class AiCodeGeneratorServiceFactory {
                 log.debug("AI 服务实例被移除，缓存键: {}, 原因: {}", key, cause);
             })
             .build();
-    @Resource(name = "langchainOpenAiChatModel")
+    @Resource(name = "openAiChatModel")
     private ChatModel chatModel;
     @Resource
     private RedisChatMemoryStore redisChatMemoryStore;

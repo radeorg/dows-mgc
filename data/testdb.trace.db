@@ -348,3 +348,18 @@ INSERT INTO user_info_8h7g6f5d4s3a2q1w (id,user_name,id_number,user_status,regis
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-10-26 18:00:13.311537+08:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "APP" not found; SQL statement:
+SELECT COUNT(*) AS `total` FROM `app` WHERE (priority = ?) AND `isDelete` = ? [42102-224]
+2025-10-26 18:00:42.115267+08:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USER" not found; SQL statement:
+SELECT `id`, `userAccount`, `userPassword`, `userName`, `userAvatar`, `userProfile`, `userRole`, `editTime`, `createTime`, `updateTime`, `isDelete`, `vipExpireTime`, `vipNumber`, `shareCode`, `inviteUser`, `isVip` FROM `user` WHERE (userAccount = ? AND userPassword = ?) AND `isDelete` = ? LIMIT 1 [42102-224]
+2025-10-26 18:00:43.692513+08:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USER" not found; SQL statement:
+SELECT `id`, `userAccount`, `userPassword`, `userName`, `userAvatar`, `userProfile`, `userRole`, `editTime`, `createTime`, `updateTime`, `isDelete`, `vipExpireTime`, `vipNumber`, `shareCode`, `inviteUser`, `isVip` FROM `user` WHERE (userAccount = ? AND userPassword = ?) AND `isDelete` = ? LIMIT 1 [42102-224]
+2025-10-26 19:04:04.485505+08:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "APP" not found; SQL statement:
+SELECT COUNT(*) AS `total` FROM `app` WHERE (priority = ?) AND `isDelete` = ? [42102-224]
+2025-10-26 19:06:30.412298+08:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USER" not found; SQL statement:
+SELECT COUNT(*) FROM `user` WHERE (userAccount = ?) AND `isDelete` = ? [42102-224]

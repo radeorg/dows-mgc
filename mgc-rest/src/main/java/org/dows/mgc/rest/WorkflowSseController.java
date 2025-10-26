@@ -1,4 +1,4 @@
-package org.dows.mgc.controller;
+package org.dows.mgc.rest;
 
 
 import lombok.extern.slf4j.Slf4j;

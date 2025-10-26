@@ -43,3 +43,8 @@ langchain4j:
       log-responses: true
       max-tokens: 512
       temperature: 0.3
+  community:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      dimension: 1536

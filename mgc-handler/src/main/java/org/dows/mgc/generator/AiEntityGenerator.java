@@ -1,10 +1,9 @@
-package org.dows.mgc.service.impl;
+package org.dows.mgc.generator;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dows.mgc.MgcProperties;
 import org.dows.mgc.loader.compiler.DynamicCompiler;
-import org.dows.mgc.service.MgcService;
 import org.dows.mgc.sql.web.ModelWebService;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
@@ -18,14 +17,12 @@ import java.util.UUID;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class MgcServiceImpl implements MgcService {
+public class AiEntityGenerator {
 
     private final ChatClient chatClient;
     private final ModelWebService modelWebService;
     private final MgcProperties properties;
 
-
-    @Override
     public Flux<String> buildRequirement(String text) {
         return chatClient.prompt()
                 .system(properties.getRequirementBuilder())
@@ -34,7 +31,6 @@ public class MgcServiceImpl implements MgcService {
                 .content();
     }
 
-    @Override
     public Flux<String> buildClass(String text) {
         return chatClient.prompt()
                 .system(properties.getClassBuilder())
@@ -43,7 +39,6 @@ public class MgcServiceImpl implements MgcService {
                 .content();
     }
 
-    @Override
     public Map<String, Object> buildWeb(String text) {
         Map<String, Object> result = new HashMap<>();
         String id = UUID.randomUUID().toString();

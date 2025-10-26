@@ -1,4 +1,4 @@
-package org.dows.mgc.controller;
+package org.dows.mgc.rest;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.io.FileSystemResource;

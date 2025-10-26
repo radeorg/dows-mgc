@@ -17,7 +17,7 @@ public class AiCodeGeneratorServiceTest {
     @Resource
     private AiCodeGeneratorService aiCodeGeneratorService;
 
-    @Resource(name = "langchainOpenAiChatModel")
+    @Resource(name = "openAiChatModel")
     private ChatModel chatModel;
 
     @Test

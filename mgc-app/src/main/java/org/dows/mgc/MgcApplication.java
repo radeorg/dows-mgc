@@ -13,10 +13,7 @@ import java.io.File;
 
 //启用缓存
 @EnableCaching
-@SpringBootApplication(exclude = {
-        dev.langchain4j.community.store.embedding.redis.spring.RedisEmbeddingStoreAutoConfiguration.class,
-        dev.langchain4j.openai.spring.AutoConfig.class
-})
+@SpringBootApplication
 @EnableAspectJAutoProxy(exposeProxy = true)
 //可在业务逻辑中获取当前的代理对象
 @MapperScan("org.dows.mgc.mapper")

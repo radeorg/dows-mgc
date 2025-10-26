@@ -1,0 +1,10 @@
+# 阿里云OSS配置（用于文件存储）
+aliyun:
+  oss:
+    endpoint: https://oss-cn-chengdu.aliyuncs.com # 或您选择的区域
+    access-key-id: ${OSS_ACCESS_KEY_ID:your_oss_access_key_id}
+    access-key-secret: ${OSS_ACCESS_KEY_SECRET:your_oss_access_key_secret}
+    bucket-name: your_bucket_name
+    region: cn-chengdu # 或您选择的区域
+    url-prefix: https://your_bucket_name.oss-cn-chengdu.aliyuncs.com/
+    dir-prefix: upload/
