@@ -9,5 +9,15 @@
     <artifactId>mgc-dao</artifactId>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.dows.cloud</groupId>
+            <artifactId>mgc-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mybatis-flex</groupId>
+            <artifactId>mybatis-flex-spring-boot3-starter</artifactId>
+        </dependency>
     </dependencies>
+
 </project>

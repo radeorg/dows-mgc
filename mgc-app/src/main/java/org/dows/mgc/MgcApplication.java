@@ -1,12 +1,26 @@
 package org.dows.mgc;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.io.File;
 
-@SpringBootApplication
+
+//启用缓存
+@EnableCaching
+@SpringBootApplication(exclude = {
+        dev.langchain4j.community.store.embedding.redis.spring.RedisEmbeddingStoreAutoConfiguration.class,
+        dev.langchain4j.openai.spring.AutoConfig.class
+})
+@EnableAspectJAutoProxy(exposeProxy = true)
+//可在业务逻辑中获取当前的代理对象
+@MapperScan("org.dows.mgc.mapper")
+@EnableScheduling
 public class MgcApplication {
 
     public static void main(String[] args) {

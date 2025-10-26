@@ -1,0 +1,45 @@
+
+# AI服务配置 - LangChain4j + ModelScope
+langchain4j:
+  open-ai:
+    chat-model:
+      base-url: https://api-inference.modelscope.cn/v1
+      api-key: ms-96b01f31-0826-4fd1-96a8-8e7214e36f26
+      model-name: Qwen/Qwen2.5-Coder-32B-Instruct
+      log-requests: true
+      log-responses: true
+      timeout: PT10M
+      max-tokens: 8192
+      strict-json-schema: true
+      response-format: json_object
+      max-retries: 3
+    streaming-chat-model:
+      #      base-url: https://api-inference.modelscope.cn/v1/
+      base-url: https://api-inference.modelscope.cn/v1
+      api-key: ms-96b01f31-0826-4fd1-96a8-8e7214e36f26
+      #      model-name: Qwen/Qwen3-235B-A22B-Instruct-2507deepseek-ai/DeepSeek-V3.2-Exp
+      model-name: Qwen/Qwen3-235B-A22B-Instruct-2507
+      log-requests: true
+      log-responses: true
+      timeout: PT10M
+      max-tokens: 8192
+      max-retries: 3
+      temperature: 0.3
+    reasoning-stream-model:
+      base-url: https://api-inference.modelscope.cn/v1/
+      api-key: ms-96b01f31-0826-4fd1-96a8-8e7214e36f26
+      model-name: Qwen/Qwen3-235B-A22B-Instruct-2507
+      log-requests: true
+      log-responses: true
+      timeout: PT10M
+      max-tokens: 40960
+      temperature: 0.3
+    routing-chat-model:
+      #      base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+      base-url: https://api-inference.modelscope.cn/v1
+      api-key: ms-96b01f31-0826-4fd1-96a8-8e7214e36f26
+      model-name: Qwen/Qwen3-235B-A22B-Instruct-2507
+      log-requests: true
+      log-responses: true
+      max-tokens: 512
+      temperature: 0.3

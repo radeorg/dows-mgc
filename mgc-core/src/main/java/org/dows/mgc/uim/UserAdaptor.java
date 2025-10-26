@@ -1,0 +1,105 @@
+package org.dows.mgc.uim;
+
+import com.mybatisflex.core.query.QueryWrapper;
+import jakarta.servlet.http.HttpServletRequest;
+import org.dows.mgc.model.dto.user.UserQueryRequest;
+import org.dows.mgc.model.vo.LoginUserVO;
+import org.dows.mgc.model.vo.UserAdminVO;
+import org.dows.mgc.model.vo.UserDetailVO;
+import org.dows.mgc.model.vo.UserPublicVO;
+
+import java.util.List;
+
+public interface UserAdaptor {
+
+    /**
+     * 用户注册
+     *
+     * @param userAccount   用户账户
+     * @param userPassword  用户密码
+     * @param checkPassword 校验密码
+     * @return 新用户 id
+     */
+    long userRegister(String userAccount, String userPassword, String checkPassword);
+
+    /**
+     * 获取脱敏的已登录用户信息
+     *
+     * @return
+     */
+    LoginUserVO getLoginUserVO(User user);
+
+
+    /**
+     * 用户登录
+     *
+     * @param userAccount  用户账户
+     * @param userPassword 用户密码
+     * @param request
+     * @return 脱敏后的用户信息
+     */
+    LoginUserVO userLogin(String userAccount, String userPassword, HttpServletRequest request);
+
+
+    /**
+     * 获取登录的用户信息
+     *
+     * @param request
+     * @return 是否成功
+     */
+    User getLoginUser(HttpServletRequest request);
+
+    /**
+     * 判断用户是不是vip
+     *
+     * @return 0 - 非vip 1 - vip
+     */
+    boolean isVip(User user);
+
+    /**
+     * 用户注销
+     *
+     * @param request
+     * @return
+     */
+    boolean userLogout(HttpServletRequest request);
+
+
+    /**
+     * 转换为用户详细VO
+     */
+    UserDetailVO getUserDetailVO(User user);
+
+    /**
+     * 转换为管理员VO
+     */
+    UserAdminVO getUserAdminVO(User user);
+
+    /**
+     * 转换为用户公开信息VO
+     */
+    UserPublicVO getUserPublicVO(User user);
+
+    /**
+     * 获取查询条件包装器
+     */
+    QueryWrapper getQueryWrapper(UserQueryRequest userQueryRequest);
+
+    /**
+     * 获取加密密码
+     */
+    String getEncryptPassword(String userPassword);
+
+    /**
+     * 批量转换为用户公开信息VO列表
+     */
+    List<UserPublicVO> getUserPublicVOList(List<? extends User> userList);
+
+
+    /**
+     * 批量更新过期VIP用户状态
+     *
+     * @return 更新的用户数量
+     */
+    int batchUpdateExpiredVipStatus();
+}

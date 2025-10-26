@@ -3,6 +3,7 @@
 
 # Log file
 *.log
+.vite
 
 # BlueJ files
 *.ctxt

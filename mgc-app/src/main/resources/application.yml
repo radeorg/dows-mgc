@@ -1,4 +1,11 @@
 spring:
+  main:
+    allow-bean-definition-overriding: true
+  autoconfigure:
+    exclude:
+      - org.springframework.ai.autoconfigure.openai.OpenAiAutoConfiguration
+  application:
+    name: mgc-application
   profiles:
     include: ai,cache
     active: dev
@@ -15,13 +22,149 @@ spring:
     suffix: .ftl
     settings:
       number_format: '0.##'
-  datasource:
-    url: jdbc:h2:file:./data/testdb;AUTO_SERVER=TRUE
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
   jmx:
     enabled: false
+
+
+
+#  datasource:
+#    url: jdbc:h2:file:./data/testdb;AUTO_SERVER=TRUE
+#    driver-class-name: org.h2.Driver
+#    username: sa
+#    password:
+  # mysql
+  # datasource:
+  #   driver-class-name: com.mysql.cj.jdbc.Driver
+  #   url: jdbc:mysql://localhost:13306/mgc_visual?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+  #   username: root
+  #   password: 123456
+  #   hikari:
+  #     # 连接池基础配置
+  #     maximum-pool-size: 10          # 减少最大连接数
+  #     minimum-idle: 2               # 减少最小空闲连接
+  #     connection-timeout: 3000      # 3秒连接超时
+  #     validation-timeout: 2000      # 2秒验证超时
+  #     idle-timeout: 600000         # 10分钟空闲超时
+  #     max-lifetime: 1800000        # 30分钟最大生命周期
+  #     leak-detection-threshold: 0  # 关闭泄漏检测以减少开销
+  # redis
+  # data:
+  #   redis:
+  #     host: localhost
+  #     port: 6379
+  #     password:
+  #     ttl: 3600  # 1 hour
+  #     database: 1
+
+  # session 配置
+  session:
+    store-type: redis
+    # session 30 天过期
+    timeout: 2592000
+
+
+
+server:
+  port: 8234
+  servlet:
+    context-path: /api
+    # cookie 30 天过期
+    session:
+      cookie:
+        max-age: 2592000
+
+
+#Prometheus+grafana
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+
+
+# springdoc-openapi项目配置
+springdoc:
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: org.dows.mgc.controller
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+
+# # AI服务配置 - LangChain4j + ModelScope
+# langchain4j:
+#   open-ai:
+#     chat-model:
+#       base-url: https://api-inference.modelscope.cn/v1
+#       api-key: ms-96b01f31-0826-4fd1-96a8-8e7214e36f26
+#       model-name: Qwen/Qwen2.5-Coder-32B-Instruct
+#       log-requests: true
+#       log-responses: true
+#       timeout: PT10M
+#       max-tokens: 8192
+#       strict-json-schema: true
+#       response-format: json_object
+#       max-retries: 3
+#     streaming-chat-model:
+#       #      base-url: https://api-inference.modelscope.cn/v1/
+#       base-url: https://api-inference.modelscope.cn/v1
+#       api-key: ms-96b01f31-0826-4fd1-96a8-8e7214e36f26
+#       #      model-name: Qwen/Qwen3-235B-A22B-Instruct-2507deepseek-ai/DeepSeek-V3.2-Exp
+#       model-name: Qwen/Qwen3-235B-A22B-Instruct-2507
+#       log-requests: true
+#       log-responses: true
+#       timeout: PT10M
+#       max-tokens: 8192
+#       max-retries: 3
+#       temperature: 0.3
+#     reasoning-stream-model:
+#       base-url: https://api-inference.modelscope.cn/v1/
+#       api-key: ms-96b01f31-0826-4fd1-96a8-8e7214e36f26
+#       model-name: Qwen/Qwen3-235B-A22B-Instruct-2507
+#       log-requests: true
+#       log-responses: true
+#       timeout: PT10M
+#       max-tokens: 40960
+#       temperature: 0.3
+#     routing-chat-model:
+#       #      base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+#       base-url: https://api-inference.modelscope.cn/v1
+#       api-key: ms-96b01f31-0826-4fd1-96a8-8e7214e36f26
+#       model-name: Qwen/Qwen3-235B-A22B-Instruct-2507
+#       log-requests: true
+#       log-responses: true
+#       max-tokens: 512
+#       temperature: 0.3
+
+# 阿里云OSS配置（用于文件存储）
+aliyun:
+  oss:
+    endpoint: https://oss-cn-chengdu.aliyuncs.com # 或您选择的区域
+    access-key-id: ${OSS_ACCESS_KEY_ID:your_oss_access_key_id}
+    access-key-secret: ${OSS_ACCESS_KEY_SECRET:your_oss_access_key_secret}
+    bucket-name: your_bucket_name
+    region: cn-chengdu # 或您选择的区域
+    url-prefix: https://your_bucket_name.oss-cn-chengdu.aliyuncs.com/
+    dir-prefix: upload/
+
+pexels:
+  api-key: your_pexels_api_key_here
+
+
+# 阿里云DashScope配置（用于图片生成）
+dashscope:
+  api-key: your_dashscope_api_key_here
+  image-model: wanx2.1-t2i-turbo
+
+
+
 logging:
   level:
     root: debug
