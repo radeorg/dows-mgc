@@ -1,0 +1,8 @@
+dows:
+  mgc:
+    gitmind:
+      login-url: "https://aw.aoscdn.com/base/passport/v2/login/telephone"
+      mind-files: "https://aw.aoscdn.com/app/gitmind/v3/files?action_type=4"
+      mind-file-url: "https://aw.aoscdn.com/app/gitmind/v3/files/%s"
+      mind-url: "https://aw.aoscdn.com/app/gitmind/v3/minds/%s"
+      mind: "project/app/应用"

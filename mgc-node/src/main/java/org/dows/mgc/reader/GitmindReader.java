@@ -5,13 +5,15 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
-import jakarta.ws.rs.HttpMethod;
-import jakarta.ws.rs.core.MediaType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dows.mgc.entity.MindNode;
+import org.dows.mgc.mind.GitMind;
+import org.dows.mgc.mind.GitmindProperties;
+import org.dows.mgc.mind.MindXpath;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -49,11 +51,10 @@ public class GitmindReader {
             new FileSystemResource(System.getProperty("user.dir") + File.separator + "gitmind.token");
 
 
-    public List<MindNode> getGitMindNode(BuildRequest buildRequest) {
+    public List<MindNode> getGitMindNode(GitMind gitMind) {
         //Map<String, MindNode> mindNodeMap = new HashMap<>();
         List<MindNode> mindNodeList = new ArrayList<>();
         try {
-            GitMind gitMind = buildRequest.getGitMind();
             String token;
             if (gitMind != null) {
                 log.info(JSONUtil.toJsonStr(gitMind));
@@ -72,7 +73,7 @@ public class GitmindReader {
                     String mindInfo = getMindInfo(mindUrl);
                     JSONObject entries = JSONUtil.parseObj(mindInfo);
                     MindNode mindNode = entries.get("root", MindNode.class);
-                    mindNode.setName(mindFileName);
+                    //mindNode.setName(mindFileName);
                     mindNodeList.add(mindNode);
                     //mindNodeMap.put(mindFileName, mindNode);
                 }

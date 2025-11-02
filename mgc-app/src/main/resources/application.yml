@@ -5,7 +5,7 @@ spring:
   application:
     name: mgc-application
   profiles:
-    include: ai,cache,datasource,langchain,oss
+    include: ai,cache,datasource,langchain,oss,gitmind,git,repository
     active: dev
 
   freemarker:
