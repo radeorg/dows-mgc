@@ -52,12 +52,12 @@ public class GitMindReader implements MindReader {
     FileSystemResource fileSystemResource =
             new FileSystemResource(System.getProperty("user.dir") + File.separator + "gitmind.token");
     @Override
-    public List<MindNode> getMindNodeList(String projectCode) {
+    public List<MindNode> loadProjectMind(String projectUri) {
         return List.of();
     }
 
     @Override
-    public Map<String, List<MindNode>> readMindNodes(String ...projectCode) {
+    public Map<String, List<MindNode>> loadMindProjects(String ...projectUri) {
         GitMind gitMind = GitMind.builder().build()
                 .addMindXpath(MindXpath.builder()
                         .apiXpath(List.of("/app/dd/admin"))

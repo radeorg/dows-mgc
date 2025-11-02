@@ -7,20 +7,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public interface MindReader {
-    Map<String, List<MindNode>> readMindNodes(String ...projectCode);
+public interface MindReader extends MindLoader {
 
-    List<MindNode> getMindNodeList(String projectCode);
-
-    default Map<NodeType, List<MindNode>> getNodeTypeMap(String appId) {
-        Map<String, List<MindNode>> projectMindNodes = readMindNodes();
-        List<MindNode> mindNodes = projectMindNodes.get(appId);
+    default Map<NodeType, List<MindNode>> getNodeTypeMap(String projectUri) {
+        Map<String, List<MindNode>> projectMindNodes = loadMindProjects(projectUri);
+        List<MindNode> mindNodes = projectMindNodes.get(projectUri);
         return mindNodes.stream().collect(Collectors.groupingBy(MindNode::getNodeType));
     }
 
-    default Map<String, MindNode> getNodeIdMap(String appId) {
-        Map<String, List<MindNode>> projectMindNodes = readMindNodes();
-        List<MindNode> mindNodes = projectMindNodes.get(appId);
+    default Map<String, MindNode> getNodeIdMap(String projectUri) {
+        Map<String, List<MindNode>> projectMindNodes = loadMindProjects(projectUri);
+        List<MindNode> mindNodes = projectMindNodes.get(projectUri);
         return mindNodes.stream().collect(Collectors.toMap(MindNode::getNodeId, node -> node));
     }
 }

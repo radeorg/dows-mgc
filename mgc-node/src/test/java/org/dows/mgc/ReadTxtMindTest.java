@@ -37,7 +37,7 @@ public class ReadTxtMindTest {
     @Test
     public void testGetMindNodes() {
         // 调用被测试方法
-        List<MindNode> nodes = mindReader.getMindNodeList("100000_rest");
+        List<MindNode> nodes = mindReader.loadProjectMind("100000_rest");
 
         // 验证结果不为空
         assertNotNull(nodes, "解析结果不应为空");
@@ -84,7 +84,7 @@ public class ReadTxtMindTest {
     @Test
     public void testMindNodeParsing() {
         // 更详细的解析测试
-        List<MindNode> nodes = mindReader.getMindNodeList("test-app-id");
+        List<MindNode> nodes = mindReader.loadProjectMind("test-app-id");
 
         // 检查特定内容的节点是否存在
         boolean hasPkgNode = nodes.stream()

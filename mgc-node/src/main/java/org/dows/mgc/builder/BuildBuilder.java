@@ -21,7 +21,7 @@ public class BuildBuilder implements AttributeBuilder {
     public void buildAttribute(String appId, MindNode node) {
         log.info("build node: {}", JSONUtil.toJsonStr(node));
 
-        List<MindNode> nodes = mindReader.getMindNodeList(appId);
+        List<MindNode> nodes = mindReader.loadProjectMind(appId);
         BuildAttribute attribute = new BuildAttribute();
         String value = node.getValue();
         String[] split = value.split(":");

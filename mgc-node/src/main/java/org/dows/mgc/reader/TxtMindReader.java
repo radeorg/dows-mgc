@@ -24,28 +24,28 @@ public class TxtMindReader implements MindReader {
 
 
     @Override
-    public Map<String, List<MindNode>> readMindNodes(String ...projectCode) {
+    public Map<String, List<MindNode>> loadMindProjects(String ... projectUri) {
         return Map.of();
     }
 
-    public Map<NodeType, List<MindNode>> getNodeTypeMap(String appId) {
-        return getMindNodeList(appId).stream().collect(Collectors.groupingBy(MindNode::getNodeType));
+    public Map<NodeType, List<MindNode>> getNodeTypeMap(String projectUri) {
+        return loadProjectMind(projectUri).stream().collect(Collectors.groupingBy(MindNode::getNodeType));
     }
 
-    public Map<String, MindNode> getNodeIdMap(String appId) {
-        return getMindNodeList(appId).stream().collect(Collectors.toMap(MindNode::getNodeId, node -> node));
+    public Map<String, MindNode> getNodeIdMap(String projectUri) {
+        return loadProjectMind(projectUri).stream().collect(Collectors.toMap(MindNode::getNodeId, node -> node));
     }
 
-    public List<MindNode> getMindNodeList(String projectCode) {
-        if (cache.containsKey(projectCode)) {
-            return cache.get(projectCode);
+    public List<MindNode> loadProjectMind(String projectUri) {
+        if (cache.containsKey(projectUri)) {
+            return cache.get(projectUri);
         }
         List<MindNode> nodes = new ArrayList<>();
         try {
             /*
              * contain file,classpath,http资源
              */
-            Resource resource = resourceLoader.getResource(projectCode);
+            Resource resource = resourceLoader.getResource(projectUri);
             BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()));
 
             // 使用ArrayDeque代替Stack，性能更优
@@ -105,7 +105,7 @@ public class TxtMindReader implements MindReader {
                 }
             }
 
-            cache.put(projectCode, nodes);
+            cache.put(projectUri, nodes);
             return nodes;
         } catch (Exception e) {
             throw new RuntimeException("读取并解析文件失败", e);

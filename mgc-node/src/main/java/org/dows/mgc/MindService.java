@@ -6,7 +6,6 @@ import org.dows.mgc.entity.MindNode;
 import org.dows.mgc.entity.NodeType;
 import org.dows.mgc.generator.ObjectGenerator;
 import org.dows.mgc.reader.MindReader;
-import org.dows.mgc.reader.MindReader1;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public class MindService {
 
 
     public void init(String appId) {
-        List<MindNode> nodes = mindReader.getMindNodeList(appId);
+        List<MindNode> nodes = mindReader.loadProjectMind(appId);
         for (MindNode node : nodes) {
             AttributeBuilder attributeBuilder = attributeBuilders.get(node.getNodeType().getBuilder());
             if (attributeBuilder != null) {

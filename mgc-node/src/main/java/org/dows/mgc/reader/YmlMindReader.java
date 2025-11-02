@@ -14,12 +14,12 @@ import java.util.Map;
 public class YmlMindReader implements MindReader {
 
     @Override
-    public Map<String, List<MindNode>> readMindNodes(String ...projectCode) {
+    public Map<String, List<MindNode>> loadMindProjects(String ... projectUri) {
         return Map.of();
     }
 
     @Override
-    public List<MindNode> getMindNodeList(String projectCode) {
+    public List<MindNode> loadProjectMind(String projectUri) {
         return List.of();
     }
 }
