@@ -1,6 +1,9 @@
 # Compiled class file
 *.class
 
+*.key
+*.pem
+.env
 # Log file
 *.log
 .vite
