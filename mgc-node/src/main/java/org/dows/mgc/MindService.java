@@ -6,6 +6,7 @@ import org.dows.mgc.entity.MindNode;
 import org.dows.mgc.entity.NodeType;
 import org.dows.mgc.generator.ObjectGenerator;
 import org.dows.mgc.reader.MindReader;
+import org.dows.mgc.reader.MindReader1;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class MindService {
         }
     }
 
-    public void build(String appId) {
+    public void generate(String appId) {
         Map<NodeType, List<MindNode>> collect = mindReader.getNodeTypeMap(appId);
         collect.forEach((nodeType, mindNodes) -> {
             ObjectGenerator objectGenerator = fileGenerators.get(nodeType.getBuilderType().getGenerator());

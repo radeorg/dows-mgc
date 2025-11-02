@@ -2,11 +2,10 @@ package org.dows.mgc;
 
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.dows.mgc.entity.GitMindNode;
 import org.dows.mgc.entity.MindNode;
 import org.dows.mgc.mind.GitMind;
 import org.dows.mgc.mind.MindXpath;
-import org.dows.mgc.reader.GitmindReader;
+import org.dows.mgc.reader.GitMindReader;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +21,9 @@ import java.util.Map;
 @SpringBootTest
 //@SpringBootApplication
 @ContextConfiguration(classes = { TestConfig.class}) // SpringBootApplication 二选一
-public class LoginService {
+public class ReadGitMindTest {
     @Autowired
-    private GitmindReader gitmindReader;
+    private GitMindReader gitmindReader;
 
     @Test
     public void test() {

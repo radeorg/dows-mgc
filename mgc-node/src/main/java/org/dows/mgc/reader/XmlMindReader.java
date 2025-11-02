@@ -2,25 +2,26 @@ package org.dows.mgc.reader;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.Node;
-import org.dom4j.io.SAXReader;
+import org.dows.mgc.entity.MindNode;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Slf4j
 @Component
-public class XmlReader implements ResourceReader {
+public class XmlMindReader implements MindReader {
+    @Override
+    public Map<String, List<MindNode>> readMindNodes(String ...projectCode) {
+        return Map.of();
+    }
+
+    @Override
+    public List<MindNode> getMindNodeList(String projectCode) {
+        return List.of();
+    }
 
    /* public MindNodes read(InputStream inputStream) throws IOException, DocumentException {
         InputStream stream = null;

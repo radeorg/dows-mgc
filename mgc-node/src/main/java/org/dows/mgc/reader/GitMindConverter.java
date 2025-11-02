@@ -5,18 +5,25 @@ import org.dows.mgc.entity.MindNode;
 import org.dows.mgc.entity.TxtNode;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
-public class GitMindNodeConverter {
+public class GitMindConverter implements MindConverter {
 
     /**
      * 将GitMindNode树形结构转换为MindNode扁平结构列表
-     * @param rootNode 根节点
+     *
+     * @param object 根节点
      * @return MindNode列表
      */
-    public List<MindNode> convertToMindNodes(GitMindNode rootNode) {
+    public List<MindNode> convertToMindNodes(Object object) {
+        if (!(object instanceof GitMindNode rootNode)) {
+            throw new IllegalArgumentException("对象不是GitMindNode类型");
+        }
         List<MindNode> result = new ArrayList<>();
         Map<String, MindNode> nodeMap = new HashMap<>();
         AtomicInteger nodeIdCounter = new AtomicInteger(1);

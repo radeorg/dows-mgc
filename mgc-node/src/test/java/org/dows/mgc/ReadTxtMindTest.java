@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 //@ContextConfiguration(classes = { TestConfig.class}) // SpringBootApplication 二选一
-public class MindServiceTest {
+public class ReadTxtMindTest {
 
     @Autowired
     private MindReader mindReader;
@@ -30,7 +30,7 @@ public class MindServiceTest {
 
         String appId = "100000_rest";
         mindService.init(appId);
-        mindService.build(appId);
+        mindService.generate(appId);
     }
 
 

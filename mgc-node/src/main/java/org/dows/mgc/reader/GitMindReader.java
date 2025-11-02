@@ -42,15 +42,31 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class GitmindReader implements ResourceReader {
+public class GitMindReader implements MindReader {
 
-    private final GitMindNodeConverter gitMindNodeConverter;
+    private final GitMindConverter gitMindConverter;
     private final GitmindProperties gitmindProperties;
     ObjectMapper objectMapper = new ObjectMapper();
     RestTemplate restTemplate = new RestTemplate();
 
     FileSystemResource fileSystemResource =
             new FileSystemResource(System.getProperty("user.dir") + File.separator + "gitmind.token");
+    @Override
+    public List<MindNode> getMindNodeList(String projectCode) {
+        return List.of();
+    }
+
+    @Override
+    public Map<String, List<MindNode>> readMindNodes(String ...projectCode) {
+        GitMind gitMind = GitMind.builder().build()
+                .addMindXpath(MindXpath.builder()
+                        .apiXpath(List.of("/app/dd/admin"))
+                        .databaseXpath(List.of("/app/dd/dows_app"))
+                        .mindFileName("project/dows-eaglee/鹰眼")
+                        .build());
+        return getGitMindNode(gitMind);
+    }
+
 
 
     public Map<String, List<MindNode>> getGitMindNode(GitMind gitMind) {
@@ -82,7 +98,7 @@ public class GitmindReader implements ResourceReader {
             }
             Map<String, List<MindNode>> mindNodeMap = new HashMap<>();
             for (GitMindNode gitMindNode : mindNodeList) {
-                List<MindNode> mindNodes = gitMindNodeConverter.convertToMindNodes(gitMindNode);
+                List<MindNode> mindNodes = gitMindConverter.convertToMindNodes(gitMindNode);
                 //project/d:fff.f:github.radeorg.dows-eaglee/ddd
 //                gitMindNode.getData().
                 String projectName = extractTargetContent(gitMindNode.getData().getText());
@@ -109,6 +125,7 @@ public class GitmindReader implements ResourceReader {
     /**
      * 从格式为/.../的字符串中提取最后一个冒号后最后一个点的内容
      * 如果最后一个冒号后没有点，则直接取该部分内容
+     *
      * @param input 输入字符串
      * @return 提取的字符串
      */
@@ -338,5 +355,7 @@ public class GitmindReader implements ResourceReader {
             throw new RuntimeException("Error during login", e);
         }
     }
+
+
 }
 
