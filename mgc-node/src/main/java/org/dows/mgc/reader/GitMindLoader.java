@@ -42,7 +42,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class GitMindReader implements MindReader {
+public class GitMindLoader implements MindLoader {
 
     private final GitMindConverter gitMindConverter;
     private final GitmindProperties gitmindProperties;
@@ -51,22 +51,30 @@ public class GitMindReader implements MindReader {
 
     FileSystemResource fileSystemResource =
             new FileSystemResource(System.getProperty("user.dir") + File.separator + "gitmind.token");
+
     @Override
     public List<MindNode> loadProjectMind(String projectUri) {
-        return List.of();
+        String fileName = projectUri.substring(0, projectUri.lastIndexOf("."));
+        if (MindCache.containsKey(fileName)) {
+            return MindCache.get(fileName);
+        }
+        List<MindNode> mindNodes = loadMindProjects(fileName).get(fileName);
+        MindCache.put(fileName, mindNodes);
+        return mindNodes;
     }
 
     @Override
-    public Map<String, List<MindNode>> loadMindProjects(String ...projectUri) {
-        GitMind gitMind = GitMind.builder().build()
-                .addMindXpath(MindXpath.builder()
-                        .apiXpath(List.of("/app/dd/admin"))
-                        .databaseXpath(List.of("/app/dd/dows_app"))
-                        .mindFileName("project/dows-eaglee/鹰眼")
-                        .build());
+    public Map<String, List<MindNode>> loadMindProjects(String... projectUri) {
+        GitMind gitMind = GitMind.builder().build();
+        for (String projectName : projectUri) {
+            gitMind.addMindXpath(MindXpath.builder()
+                    .apiXpath(List.of("/app/dd/admin"))
+                    .databaseXpath(List.of("/app/dd/dows_app"))
+                    .mindFileName(projectName)
+                    .build());
+        }
         return getGitMindNode(gitMind);
     }
-
 
 
     public Map<String, List<MindNode>> getGitMindNode(GitMind gitMind) {
@@ -119,7 +127,7 @@ public class GitMindReader implements MindReader {
             //refreshToken();
             log.info("refresh token: {}", e.getMessage());
         }
-        return null;
+        return Map.of();
     }
 
     /**

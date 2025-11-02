@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.dows.mgc.entity.MindNode;
 import org.dows.mgc.mind.GitMind;
 import org.dows.mgc.mind.MindXpath;
-import org.dows.mgc.reader.GitMindReader;
+import org.dows.mgc.reader.GitMindLoader;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import java.util.Map;
 @ContextConfiguration(classes = { TestConfig.class}) // SpringBootApplication 二选一
 public class ReadGitMindTest {
     @Autowired
-    private GitMindReader gitmindReader;
+    private GitMindLoader gitmindLoader;
 
     @Test
     public void test() {
@@ -40,7 +40,7 @@ public class ReadGitMindTest {
                         .mindFileName("project/app1/应用")
                         .build());*/
 
-        Map<String, List<MindNode>> gitMindNodes = gitmindReader.getGitMindNode(gitMind);
+        Map<String, List<MindNode>> gitMindNodes = gitmindLoader.getGitMindNode(gitMind);
         //List<MindNode> gitMindNodes = gitmindReader.getGitMindNode(gitMind);
 
 

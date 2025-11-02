@@ -11,7 +11,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 @Component
-public class YmlMindReader implements MindReader {
+public class YmlMindLoader implements MindLoader {
 
     @Override
     public Map<String, List<MindNode>> loadMindProjects(String ... projectUri) {

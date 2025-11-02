@@ -27,7 +27,7 @@ public class ProjectBuilder implements AttributeBuilder {
      */
     public void buildAttribute(String appId, MindNode node) {
         log.info("project node: {}", JSONUtil.toJsonStr(node));
-        List<MindNode> nodes = mindReader.loadProjectMind(appId);
+        List<MindNode> nodes = mindReader.readProjectMind(appId);
         ProjectAttribute attribute = new ProjectAttribute();
         String value = node.getValue();
         int i = value.lastIndexOf(":");

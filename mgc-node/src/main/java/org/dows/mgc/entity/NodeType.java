@@ -4,10 +4,17 @@ import lombok.Getter;
 
 @Getter
 public enum NodeType {
+    github(BuilderType.nullBuilder),
+    gitee(BuilderType.nullBuilder),
+    gitlab(BuilderType.nullBuilder),
 
     repository(BuilderType.repositoryBuilder),
+
     project(BuilderType.projectBuilder),
     build(BuilderType.nullBuilder),
+    maven(BuilderType.nullBuilder),
+    gradle(BuilderType.nullBuilder),
+    //builder(BuilderType.nullBuilder),
     pkg(BuilderType.nullBuilder),
     rest(BuilderType.restBuilder),
     post(BuilderType.nullBuilder),
@@ -22,6 +29,7 @@ public enum NodeType {
     varchar(BuilderType.nullBuilder),
     integer(BuilderType.nullBuilder),
     bool(BuilderType.nullBuilder),
+    tinyint(BuilderType.nullBuilder),
     bigint(BuilderType.nullBuilder),
     decimal(BuilderType.nullBuilder),
     datetime(BuilderType.nullBuilder),

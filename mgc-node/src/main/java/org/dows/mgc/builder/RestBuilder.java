@@ -22,7 +22,7 @@ public class RestBuilder implements AttributeBuilder {
 
     public void buildAttribute(String appId, MindNode node) {
         log.info("rest node: {}", JSONUtil.toJsonStr(node));
-        List<MindNode> nodes = mindReader.loadProjectMind(appId);
+        List<MindNode> nodes = mindReader.readProjectMind(appId);
         JavaAttribute nodeAttribute = new JavaAttribute();
         MindNode mindNode = nodes.stream()
                 .filter(n -> node.getParentId().equals(n.getNodeId())).findFirst()

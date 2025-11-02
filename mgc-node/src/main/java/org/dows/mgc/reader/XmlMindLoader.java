@@ -12,7 +12,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 @Component
-public class XmlMindReader implements MindReader {
+public class XmlMindLoader implements MindLoader {
     @Override
     public Map<String, List<MindNode>> loadMindProjects(String ... projectUri) {
         return Map.of();

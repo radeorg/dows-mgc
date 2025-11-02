@@ -21,7 +21,7 @@ public class RestGenerator implements ObjectGenerator {
     @Override
     public void generate(String appId, MindNode mindNode) {
         log.info("rest node: {}", JSONUtil.toJsonStr(mindNode));
-        Map<String, MindNode> nodeIdMap = mindReader.getNodeIdMap(appId);
+        Map<String, MindNode> nodeIdMap = mindReader.readProjectNodeIdMap(appId);
 
         JavaAttribute javaAttribute = mindNode.getNodeAttribute().toAttribute(JavaAttribute.class);
         String filePath = javaAttribute.getFilePath();

@@ -3,7 +3,6 @@ package org.dows.mgc.reader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dows.mgc.entity.MindNode;
-import org.dows.mgc.entity.NodeType;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
@@ -16,34 +15,33 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 @Component
-public class TxtMindReader implements MindReader {
+public class TxtMindLoader implements MindLoader {
 
     private final ResourceLoader resourceLoader;
 
-    private static final Map<String, List<MindNode>> cache = new HashMap<>();
 
 
     @Override
-    public Map<String, List<MindNode>> loadMindProjects(String ... projectUri) {
+    public Map<String, List<MindNode>> loadMindProjects(String... projectUri) {
         return Map.of();
     }
 
-    public Map<NodeType, List<MindNode>> getNodeTypeMap(String projectUri) {
-        return loadProjectMind(projectUri).stream().collect(Collectors.groupingBy(MindNode::getNodeType));
-    }
-
-    public Map<String, MindNode> getNodeIdMap(String projectUri) {
-        return loadProjectMind(projectUri).stream().collect(Collectors.toMap(MindNode::getNodeId, node -> node));
-    }
+//    public Map<NodeType, List<MindNode>> getNodeTypeMap(String projectUri) {
+//        return loadProjectMind(projectUri).stream().collect(Collectors.groupingBy(MindNode::getNodeType));
+//    }
+//
+//    public Map<String, MindNode> getNodeIdMap(String projectUri) {
+//        return loadProjectMind(projectUri).stream().collect(Collectors.toMap(MindNode::getNodeId, node -> node));
+//    }
 
     public List<MindNode> loadProjectMind(String projectUri) {
-        if (cache.containsKey(projectUri)) {
-            return cache.get(projectUri);
+        if (MindCache.containsKey(projectUri)) {
+            return MindCache.get(projectUri);
         }
         List<MindNode> nodes = new ArrayList<>();
         try {
             /*
-             * contain file,classpath,http资源
+             * contain: file,classpath,http etc.
              */
             Resource resource = resourceLoader.getResource(projectUri);
             BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()));
@@ -105,7 +103,7 @@ public class TxtMindReader implements MindReader {
                 }
             }
 
-            cache.put(projectUri, nodes);
+            MindCache.put(projectUri, nodes);
             return nodes;
         } catch (Exception e) {
             throw new RuntimeException("读取并解析文件失败", e);

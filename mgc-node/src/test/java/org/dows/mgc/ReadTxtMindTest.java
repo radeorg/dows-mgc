@@ -19,25 +19,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 //@ContextConfiguration(classes = { TestConfig.class}) // SpringBootApplication 二选一
 public class ReadTxtMindTest {
-
     @Autowired
     private MindReader mindReader;
-    @Autowired
-    private MindService mindService;
-
-    @Test
-    public void test() {
-
-        String appId = "100000_rest";
-        mindService.init(appId);
-        mindService.generate(appId);
-    }
-
-
     @Test
     public void testGetMindNodes() {
         // 调用被测试方法
-        List<MindNode> nodes = mindReader.loadProjectMind("100000_rest");
+        List<MindNode> nodes = mindReader.readProjectMind("100000_rest");
 
         // 验证结果不为空
         assertNotNull(nodes, "解析结果不应为空");
@@ -84,7 +71,7 @@ public class ReadTxtMindTest {
     @Test
     public void testMindNodeParsing() {
         // 更详细的解析测试
-        List<MindNode> nodes = mindReader.loadProjectMind("test-app-id");
+        List<MindNode> nodes = mindReader.readProjectMind("test-app-id");
 
         // 检查特定内容的节点是否存在
         boolean hasPkgNode = nodes.stream()
