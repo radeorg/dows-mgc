@@ -1,4 +1,4 @@
-package org.dows.mgc;
+package org.dows.mgc.reader;
 
 import lombok.RequiredArgsConstructor;
 import org.dows.mgc.entity.MindNode;

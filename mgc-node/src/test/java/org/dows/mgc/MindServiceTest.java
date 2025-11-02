@@ -1,6 +1,7 @@
 package org.dows.mgc;
 
 import org.dows.mgc.entity.MindNode;
+import org.dows.mgc.reader.MindReader;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -5,6 +5,7 @@ import org.dows.mgc.builder.AttributeBuilder;
 import org.dows.mgc.entity.MindNode;
 import org.dows.mgc.entity.NodeType;
 import org.dows.mgc.generator.ObjectGenerator;
+import org.dows.mgc.reader.MindReader;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

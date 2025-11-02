@@ -1,0 +1,26 @@
+dows:
+  git:
+    init:
+      - cd ${folder}
+      - git init
+      - git remote add origin ${repository}
+      - git branch -M ${branch}
+    pull:
+      - cd ${folder}
+      - git pull
+      - git
+    clone:
+      - git clone ${repository} ${folder}
+      - git pull
+      - git checkout ${branch}
+    merge:
+      - git checkout main
+      - git merge ${branch}
+      - git checkout ${branch}
+    push:
+      - cd ${folder}
+      - git add .
+      - git commit -m '${commit}'
+      - git push
+
+
