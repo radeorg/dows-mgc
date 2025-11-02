@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.dows.mgc.entity.GitMindNode;
 import org.dows.mgc.entity.MindNode;
 import org.dows.mgc.mind.GitMind;
 import org.dows.mgc.mind.GitmindProperties;
@@ -41,8 +42,9 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class GitmindReader {
+public class GitmindReader implements ResourceReader {
 
+    private final GitMindNodeConverter gitMindNodeConverter;
     private final GitmindProperties gitmindProperties;
     ObjectMapper objectMapper = new ObjectMapper();
     RestTemplate restTemplate = new RestTemplate();
@@ -51,9 +53,9 @@ public class GitmindReader {
             new FileSystemResource(System.getProperty("user.dir") + File.separator + "gitmind.token");
 
 
-    public List<MindNode> getGitMindNode(GitMind gitMind) {
+    public Map<String, List<MindNode>> getGitMindNode(GitMind gitMind) {
         //Map<String, MindNode> mindNodeMap = new HashMap<>();
-        List<MindNode> mindNodeList = new ArrayList<>();
+        List<GitMindNode> mindNodeList = new ArrayList<>();
         try {
             String token;
             if (gitMind != null) {
@@ -72,13 +74,22 @@ public class GitmindReader {
                     String mindUrl = getMindFileUrl(token, mindGuid);
                     String mindInfo = getMindInfo(mindUrl);
                     JSONObject entries = JSONUtil.parseObj(mindInfo);
-                    MindNode mindNode = entries.get("root", MindNode.class);
+                    GitMindNode mindNode = entries.get("root", GitMindNode.class);
                     //mindNode.setName(mindFileName);
                     mindNodeList.add(mindNode);
                     //mindNodeMap.put(mindFileName, mindNode);
                 }
             }
-            return mindNodeList;
+            Map<String, List<MindNode>> mindNodeMap = new HashMap<>();
+            for (GitMindNode gitMindNode : mindNodeList) {
+                List<MindNode> mindNodes = gitMindNodeConverter.convertToMindNodes(gitMindNode);
+                //project/d:fff.f:github.radeorg.dows-eaglee/ddd
+//                gitMindNode.getData().
+                String projectName = extractTargetContent(gitMindNode.getData().getText());
+                mindNodeMap.put(projectName, mindNodes);
+            }
+
+            return mindNodeMap;
             /*Map mindFileNames = getMindFileNames(token, guid, buildRequest.getGitmind());
             if (mindFileNames != null) {
                 String mindGuid = (String) mindFileNames.get("guid");
@@ -93,6 +104,45 @@ public class GitmindReader {
             log.info("refresh token: {}", e.getMessage());
         }
         return null;
+    }
+
+    /**
+     * 从格式为/.../的字符串中提取最后一个冒号后最后一个点的内容
+     * 如果最后一个冒号后没有点，则直接取该部分内容
+     * @param input 输入字符串
+     * @return 提取的字符串
+     */
+    public String extractTargetContent(String input) {
+        if (input == null || input.isEmpty()) {
+            return null;
+        }
+
+        // 提取/.../中间的内容
+        int firstSlashIndex = input.indexOf('/');
+        int lastSlashIndex = input.lastIndexOf('/');
+
+        if (firstSlashIndex == -1 || lastSlashIndex == -1 || firstSlashIndex == lastSlashIndex) {
+            return null; // 不符合/.../格式
+        }
+
+        String content = input.substring(firstSlashIndex + 1, lastSlashIndex);
+
+        // 处理最后一个冒号后的内容
+        int lastColonIndex = content.lastIndexOf(':');
+        if (lastColonIndex != -1) {
+            String afterLastColon = content.substring(lastColonIndex + 1);
+
+            // 检查最后一个点
+            int lastDotIndex = afterLastColon.lastIndexOf('.');
+            if (lastDotIndex != -1 && lastDotIndex < afterLastColon.length() - 1) {
+                return afterLastColon.substring(lastDotIndex + 1);
+            } else {
+                return afterLastColon; // 如果没有点或点在最后，直接返回冒号后的内容
+            }
+        } else {
+            // 如果没有冒号，返回整个中间内容
+            return content;
+        }
     }
 
     public void refreshToken() {

@@ -2,9 +2,11 @@ package org.dows.mgc;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 
 @TestConfiguration
 @ComponentScan(basePackages = "org.dows.mgc")
+@PropertySource("classpath:application.yml")
 public class TestConfig {
 //    @Bean
 //    public MindNodeService mindNodeService(ResourceLoader resourceLoader) {

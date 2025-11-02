@@ -31,7 +31,7 @@ public class MindNode {
                 description = split[2];
             }
         } catch (Exception e) {
-            throw new RuntimeException(String.format("节点:%s,类型:%s,不存在", nodeId, content));
+            //throw new RuntimeException(String.format("节点:%s,类型:%s,不存在", nodeId, content));
         }
     }
 

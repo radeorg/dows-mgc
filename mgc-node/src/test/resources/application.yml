@@ -1,3 +1,7 @@
 spring:
   application:
       name: spring-boot-demo
+
+  profiles:
+    include: ai,cache,datasource,langchain,oss,gitmind,git,repository
+    active: dev

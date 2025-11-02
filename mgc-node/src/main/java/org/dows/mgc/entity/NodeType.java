@@ -4,6 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum NodeType {
+
+    repository(BuilderType.repositoryBuilder),
     project(BuilderType.projectBuilder),
     build(BuilderType.nullBuilder),
     pkg(BuilderType.nullBuilder),
@@ -14,6 +16,9 @@ public enum NodeType {
     delete(BuilderType.nullBuilder),
     in(BuilderType.nullBuilder),
     out(BuilderType.nullBuilder),
+
+    database(BuilderType.nullBuilder),
+    table(BuilderType.nullBuilder),
     varchar(BuilderType.nullBuilder),
     integer(BuilderType.nullBuilder),
     bool(BuilderType.nullBuilder),

@@ -1,8 +1,10 @@
 package org.dows.mgc.git;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.resource.ClassPathResource;
+import org.dows.mgc.entity.CicdScriptParam;
+import org.dows.mgc.entity.DeploySetting;
+import org.dows.mgc.util.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Map;
+
 
 
 public interface RepositoryService {
@@ -53,21 +56,21 @@ public interface RepositoryService {
                 Map<String, Object> stringObjectMap = BeanUtil.beanToMap(cicdScriptParam);
                 // 读取文件gitlab-ci内容
                 String content = Files.readString(path);
-                String newContent = replaceVar(stringObjectMap, content);
+                String newContent = GitAction.replaceVar(stringObjectMap, content);
 
                 assert newContent != null;
                 Files.writeString(path, newContent);
 
                 // 读取文件sonar-project.properties内容
                 String content2 = Files.readString(path2);
-                String newContent2 = replaceVar(stringObjectMap, content2);
+                String newContent2 = GitAction.replaceVar(stringObjectMap, content2);
 
                 assert newContent2 != null;
                 Files.writeString(path2, newContent2);
 
                 // 读取文件.env内容
                 String content3 = Files.readString(path3);
-                String newContent3 = replaceVar(stringObjectMap, content3);
+                String newContent3 = GitAction.replaceVar(stringObjectMap, content3);
 
                 assert newContent3 != null;
                 Files.writeString(path3, newContent3);

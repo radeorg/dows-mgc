@@ -5,12 +5,13 @@ import lombok.Getter;
 public enum BuilderType {
 
     nullBuilder(""),
-    restBuilder("restGenerator"),
+    databaseBuilder("databaseGenerator"),
 
-    projectBuilder("projectGenerator")
+    repositoryBuilder("repositoryGenerator"),
 
+    projectBuilder("projectGenerator"),
+    restBuilder("restGenerator");
 
-    ;
 
     @Getter
     private final String generator;
