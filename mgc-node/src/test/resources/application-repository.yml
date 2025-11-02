@@ -14,4 +14,4 @@ dows:
       github:
         host: https://github.xxx.com
         owner: mindorg
-        token: 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
+        token: ${GITHUB_TOKEN}

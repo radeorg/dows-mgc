@@ -3,14 +3,14 @@ dows:
     workDir: C:\work\project\wes
     gitlab:
       #      username: lait
-      #      password: shdy0129
+      #      password:
       host: http://192.168.23.19
-      owner: shdy
+      owner:
       #账号级别
       #      token: V878dXedjDCkv/TEUJJWc
       #org级别
-      token: mV3516S3SzdKgYsjxhYD
+      token:
     github:
       host: https://github.xxx.com
       owner: mindorg
-      token: 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
+      token: ${GITHUB_TOKEN}
