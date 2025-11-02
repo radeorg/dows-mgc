@@ -19,7 +19,7 @@ public class GithubClient implements RepositoryClient {
         try {
             /**
              * github = new GitHubBuilder()
-             * .withOAuthToken("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")
+             * .withOAuthToken("")
              * .build();
              */
             RepositoryProperties.GithubSetting github1 = repositoryProperties.getGithub();
