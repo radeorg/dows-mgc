@@ -12,6 +12,7 @@ import org.dows.mgc.entity.MindNode;
 import org.dows.mgc.mind.GitMind;
 import org.dows.mgc.mind.GitmindProperties;
 import org.dows.mgc.mind.MindXpath;
+import org.dows.mgc.util.MindUtil;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
@@ -109,7 +110,7 @@ public class GitMindLoader implements MindLoader {
                 List<MindNode> mindNodes = gitMindConverter.convertToMindNodes(gitMindNode);
                 //project/d:fff.f:github.radeorg.dows-eaglee/ddd
 //                gitMindNode.getData().
-                String projectName = extractTargetContent(gitMindNode.getData().getText());
+                String projectName = MindUtil.extractProjectName(gitMindNode.getData().getText());
                 mindNodeMap.put(projectName, mindNodes);
             }
 
@@ -130,45 +131,7 @@ public class GitMindLoader implements MindLoader {
         return Map.of();
     }
 
-    /**
-     * 从格式为/.../的字符串中提取最后一个冒号后最后一个点的内容
-     * 如果最后一个冒号后没有点，则直接取该部分内容
-     *
-     * @param input 输入字符串
-     * @return 提取的字符串
-     */
-    public String extractTargetContent(String input) {
-        if (input == null || input.isEmpty()) {
-            return null;
-        }
 
-        // 提取/.../中间的内容
-        int firstSlashIndex = input.indexOf('/');
-        int lastSlashIndex = input.lastIndexOf('/');
-
-        if (firstSlashIndex == -1 || lastSlashIndex == -1 || firstSlashIndex == lastSlashIndex) {
-            return null; // 不符合/.../格式
-        }
-
-        String content = input.substring(firstSlashIndex + 1, lastSlashIndex);
-
-        // 处理最后一个冒号后的内容
-        int lastColonIndex = content.lastIndexOf(':');
-        if (lastColonIndex != -1) {
-            String afterLastColon = content.substring(lastColonIndex + 1);
-
-            // 检查最后一个点
-            int lastDotIndex = afterLastColon.lastIndexOf('.');
-            if (lastDotIndex != -1 && lastDotIndex < afterLastColon.length() - 1) {
-                return afterLastColon.substring(lastDotIndex + 1);
-            } else {
-                return afterLastColon; // 如果没有点或点在最后，直接返回冒号后的内容
-            }
-        } else {
-            // 如果没有冒号，返回整个中间内容
-            return content;
-        }
-    }
 
     public void refreshToken() {
         if (fileSystemResource.exists()) {

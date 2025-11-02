@@ -10,7 +10,7 @@ public enum NodeType {
 
     repository(BuilderType.repositoryBuilder),
 
-    project(BuilderType.projectBuilder),
+    project(BuilderType.nullBuilder),
     build(BuilderType.nullBuilder),
     maven(BuilderType.nullBuilder),
     gradle(BuilderType.nullBuilder),

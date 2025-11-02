@@ -3,6 +3,7 @@ package org.dows.mgc.builder;
 import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.dows.mgc.context.ProjectContext;
 import org.dows.mgc.entity.BuildAttribute;
 import org.dows.mgc.entity.MindNode;
 import org.dows.mgc.reader.MindReader;
@@ -28,6 +29,9 @@ public class BuildBuilder implements AttributeBuilder {
         attribute.setArtifactId(split[0]);
         attribute.setGroupId(split[1]);
         attribute.setVersion(split[2]);
+
+        ProjectContext projectContext = ProjectContext.getProjectContext(appId);
+
 
 
         node.setNodeAttribute(attribute);

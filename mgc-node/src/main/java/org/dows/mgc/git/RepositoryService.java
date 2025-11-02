@@ -4,7 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.io.resource.ClassPathResource;
 import org.dows.mgc.entity.CicdScriptParam;
 import org.dows.mgc.entity.DeploySetting;
-import org.dows.mgc.util.FileUtil;
+import org.dows.mgc.util.MindUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,7 +48,7 @@ public interface RepositoryService {
             Path path3 = Path.of(folder + File.separator + projectFolder + File.separator + "cicd/dev/.env");
             Files.copy(classPathResource.getStream(), path, StandardCopyOption.REPLACE_EXISTING);
             Files.copy(classPathResource2.getStream(), path2, StandardCopyOption.REPLACE_EXISTING);
-            FileUtil.copyFolderRecursively(Path.of(classPathResource3.getAbsolutePath()),
+            MindUtil.copyFolderRecursively(Path.of(classPathResource3.getAbsolutePath()),
                     Path.of(folder + File.separator + projectFolder + File.separator + "cicd"));
 
             CicdScriptParam cicdScriptParam = deploySetting.getCicdScriptParam();

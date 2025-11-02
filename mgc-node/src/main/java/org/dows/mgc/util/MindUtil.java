@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 @Slf4j
-public class FileUtil {
+public class MindUtil {
 
     /**
      * 递归复制文件夹及其子文件夹和文件到目标地址。
@@ -58,6 +58,47 @@ public class FileUtil {
             System.out.println("Replacement completed successfully.");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 从格式为/.../的字符串中提取最后一个冒号后最后一个点的内容
+     * 如果最后一个冒号后没有点，则直接取该部分内容
+     *
+     * @param input 输入字符串
+     * @return 提取的字符串
+     */
+    public static  String extractProjectName(String input) {
+        if (input == null || input.isEmpty()) {
+            return null;
+        }
+
+        // 提取/.../中间的内容
+        int firstSlashIndex = input.indexOf('/');
+        int lastSlashIndex = input.lastIndexOf('/');
+
+        if (firstSlashIndex == -1 || lastSlashIndex == -1 || firstSlashIndex == lastSlashIndex) {
+            return null; // 不符合/.../格式
+        }
+
+        String content = input.substring(firstSlashIndex + 1, lastSlashIndex);
+
+        // 处理最后一个冒号后的内容
+        int lastColonIndex = content.lastIndexOf(':');
+        if (lastColonIndex != -1) {
+            String afterLastColon = content.substring(lastColonIndex + 1);
+
+            // 检查最后一个点
+            int lastDotIndex = afterLastColon.lastIndexOf('.');
+            if (lastDotIndex != -1 && lastDotIndex < afterLastColon.length() - 1) {
+                return afterLastColon.substring(lastDotIndex + 1);
+            } else {
+                return afterLastColon; // 如果没有点或点在最后，直接返回冒号后的内容
+            }
+        } else {
+            // 如果没有冒号，返回整个中间内容
+            return content;
         }
     }
 

@@ -3,9 +3,11 @@ package org.dows.mgc.builder;
 import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.dows.mgc.context.ProjectContext;
 import org.dows.mgc.entity.MindNode;
 import org.dows.mgc.entity.ProjectAttribute;
 import org.dows.mgc.reader.MindReader;
+import org.dows.mgc.util.MindUtil;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -39,6 +41,11 @@ public class ProjectBuilder implements AttributeBuilder {
             String repositoryHost = split[0] + ".com";
             repository = repository.replace(split[0], repositoryHost) + ".git";
         }
+        String projectName = MindUtil.extractProjectName(value);
+        ProjectContext projectContext = ProjectContext.getProjectContext(appId);
+        projectContext.setAppId(appId);
+        projectContext.setProjectDir(localFolder);
+        projectContext.setProjectName(projectName);
 
         attribute.setFolderPath(localFolder);
         attribute.setRepository(repository);
