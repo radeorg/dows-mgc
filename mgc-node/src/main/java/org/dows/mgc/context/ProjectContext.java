@@ -1,6 +1,7 @@
 package org.dows.mgc.context;
 
 import lombok.Data;
+import org.dows.mgc.entity.RepositoryAttribute;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,6 +17,7 @@ public class ProjectContext {
     private String projectDir;
 //    private String workDir;
 
+    private RepositoryAttribute repositoryAttribute;
     public static ProjectContext getProjectContext(String projectCode) {
         ProjectContext projectContext = projectContexts.get(projectCode);
         if(projectContext == null) {

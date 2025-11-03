@@ -3,6 +3,7 @@ package org.dows.mgc.builder;
 import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.dows.mgc.context.AppMindCache;
 import org.dows.mgc.context.ProjectContext;
 import org.dows.mgc.entity.BuildAttribute;
 import org.dows.mgc.entity.MindNode;
@@ -17,6 +18,11 @@ import java.util.List;
 public class BuildBuilder implements AttributeBuilder {
 
     private final MindReader mindReader;
+    private final AppMindCache appMindCache;
+    @Override
+    public Integer getOrder() {
+        return 0;
+    }
 
     @Override
     public void buildAttribute(String appId, MindNode node) {
@@ -31,7 +37,6 @@ public class BuildBuilder implements AttributeBuilder {
         attribute.setVersion(split[2]);
 
         ProjectContext projectContext = ProjectContext.getProjectContext(appId);
-
 
 
         node.setNodeAttribute(attribute);

@@ -4,6 +4,8 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.dows.mgc.context.AppMindCache;
+import org.dows.mgc.context.ProjectContext;
 import org.dows.mgc.entity.JavaAttribute;
 import org.dows.mgc.entity.MindNode;
 import org.dows.mgc.reader.MindReader;
@@ -18,7 +20,12 @@ import java.util.List;
 public class RestBuilder implements AttributeBuilder {
 
     private final MindReader mindReader;
+    private final AppMindCache appMindCache;
 
+    @Override
+    public Integer getOrder() {
+        return 0;
+    }
 
     public void buildAttribute(String appId, MindNode node) {
         log.info("rest node: {}", JSONUtil.toJsonStr(node));
@@ -31,12 +38,15 @@ public class RestBuilder implements AttributeBuilder {
             String pkg = mindNode.getValue();
             nodeAttribute.setPkg(pkg);
 
-            String value = node.getValue();
+            String value = StrUtil.upperFirst(node.getValue());
             // 需要暴露
             if (value.endsWith(":")) {
                 value = StrUtil.upperFirst(value.substring(0, value.length() - 1));
                 // todo 记录暴露的类名
             }
+            ProjectContext projectContext = ProjectContext.getProjectContext(appId);
+            //String baskPkg = projectContext.getBaskPkg();
+            //pkg = baskPkg + "." + pkg;
             nodeAttribute.setFileName(value + ".java");
             nodeAttribute.setFilePath(pkg.replaceAll("\\.", File.separator) + File.separator + nodeAttribute.getFileName());
             nodeAttribute.setClassName(value);

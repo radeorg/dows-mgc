@@ -19,8 +19,8 @@ public class MindServiceTest {
 
     @Test
     public void test() {
-        String appId = "dows-eaglee.gmind";
-        mindService.init(appId);
+        String file = "dows-eaglee.gmind";
+        String appId = mindService.init(file);
         mindService.generate(appId);
     }
 

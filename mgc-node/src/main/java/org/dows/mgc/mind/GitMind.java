@@ -15,6 +15,8 @@ public class GitMind {
     private String username;
     @Schema(title = "密码")
     private String password;
+
+    private String fileName;
     @Schema(title = "取值路径[xpath]")
     private final List<MindXpath> mindXpaths = new ArrayList<>();
 

@@ -4,11 +4,11 @@ import lombok.Getter;
 
 @Getter
 public enum NodeType {
-    github(BuilderType.nullBuilder),
+    github(BuilderType.repositoryBuilder),
     gitee(BuilderType.nullBuilder),
     gitlab(BuilderType.nullBuilder),
-
-    repository(BuilderType.repositoryBuilder),
+    rsa(BuilderType.nullBuilder),
+    //repository(BuilderType.repositoryBuilder),
 
     project(BuilderType.nullBuilder),
     build(BuilderType.nullBuilder),

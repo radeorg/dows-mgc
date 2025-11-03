@@ -10,7 +10,11 @@ public enum BuilderType {
     repositoryBuilder("repositoryGenerator"),
 
     projectBuilder("projectGenerator"),
-    restBuilder("restGenerator");
+    restBuilder("restGenerator"),
+    //githubBuilder("githubGenerator"),
+
+
+    ;
 
 
     @Getter

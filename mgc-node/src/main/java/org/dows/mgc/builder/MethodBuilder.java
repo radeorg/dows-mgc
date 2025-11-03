@@ -3,6 +3,7 @@ package org.dows.mgc.builder;
 import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.dows.mgc.context.AppMindCache;
 import org.dows.mgc.reader.MindReader;
 import org.dows.mgc.reader.MindReader;
 import org.dows.mgc.entity.MindNode;
@@ -13,7 +14,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class MethodBuilder implements AttributeBuilder {
 
-    private final MindReader mindReader;
+
+    private final AppMindCache appMindCache;
+
+    @Override
+    public Integer getOrder() {
+        return 0;
+    }
 
     @Override
     public void buildAttribute(String appId, MindNode node) {

@@ -9,6 +9,6 @@ public interface MindLoader {
 
     List<MindNode> loadProjectMind(String projectUri);
 
-    Map<String, List<MindNode>> loadMindProjects(String... projectUri);
+    Map<String, List<MindNode>> loadProjectMinds(String... projectUri);
 
 }

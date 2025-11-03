@@ -40,7 +40,7 @@ public class ReadGitMindTest {
                         .mindFileName("project/app1/应用")
                         .build());*/
 
-        Map<String, List<MindNode>> gitMindNodes = gitmindLoader.getGitMindNode(gitMind);
+        Map<String, List<MindNode>> gitMindNodes = gitmindLoader.loadProjectMinds("");
         //List<MindNode> gitMindNodes = gitmindReader.getGitMindNode(gitMind);
 
 

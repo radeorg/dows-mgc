@@ -3,6 +3,7 @@ package org.dows.mgc.builder;
 import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.dows.mgc.context.AppMindCache;
 import org.dows.mgc.context.ProjectContext;
 import org.dows.mgc.entity.MindNode;
 import org.dows.mgc.entity.ProjectAttribute;
@@ -19,11 +20,15 @@ import java.util.List;
 public class ProjectBuilder implements AttributeBuilder {
 
     private final MindReader mindReader;
+    private final AppMindCache appMindCache;
 
-
+    @Override
+    public Integer getOrder() {
+        return 0;
+    }
     /**
      * project/d:fff.f:github.radeorg.dows-eaglee/鹰眼
-     *
+     * project/d:fff.f:dows-eaglee
      * @param appId
      * @param node
      */
@@ -32,6 +37,18 @@ public class ProjectBuilder implements AttributeBuilder {
         List<MindNode> nodes = mindReader.readProjectMind(appId);
         ProjectAttribute attribute = new ProjectAttribute();
         String value = node.getValue();
+
+
+
+
+
+        //String projectPath = parsePath(projectNode.getValue());
+        //attribute.setFolderPath(projectPath);
+
+
+
+
+
         int i = value.lastIndexOf(":");
         String localFolder = value.substring(0, i);
         localFolder = localFolder.replace(".", File.separator);

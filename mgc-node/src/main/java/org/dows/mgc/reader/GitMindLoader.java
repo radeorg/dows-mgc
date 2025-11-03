@@ -12,7 +12,6 @@ import org.dows.mgc.entity.MindNode;
 import org.dows.mgc.mind.GitMind;
 import org.dows.mgc.mind.GitmindProperties;
 import org.dows.mgc.mind.MindXpath;
-import org.dows.mgc.util.MindUtil;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
@@ -59,28 +58,32 @@ public class GitMindLoader implements MindLoader {
         if (MindCache.containsKey(fileName)) {
             return MindCache.get(fileName);
         }
-        List<MindNode> mindNodes = loadMindProjects(fileName).get(fileName);
-        MindCache.put(fileName, mindNodes);
-        return mindNodes;
+        GitMind gitMind = GitMind.builder()
+                .fileName(fileName)
+                .username(null)
+                .password(null)
+                .build();
+        return loadGitMindNodes(gitMind);
+        /*if (mindNodes == null || mindNodes.isEmpty()) {
+            log.info("no project node found");
+            return new ArrayList<>();
+        }*/
+        //MindCache.put(fileName, mindNodes);
+//        return mindNodes;
     }
 
     @Override
-    public Map<String, List<MindNode>> loadMindProjects(String... projectUri) {
-        GitMind gitMind = GitMind.builder().build();
-        for (String projectName : projectUri) {
-            gitMind.addMindXpath(MindXpath.builder()
-                    .apiXpath(List.of("/app/dd/admin"))
-                    .databaseXpath(List.of("/app/dd/dows_app"))
-                    .mindFileName(projectName)
-                    .build());
+    public Map<String, List<MindNode>> loadProjectMinds(String... projectUris) {
+        Map<String, List<MindNode>> mindNodeMap = new HashMap<>();
+        for (String projectUri : projectUris) {
+            mindNodeMap.put(projectUri, loadProjectMind(projectUri));
         }
-        return getGitMindNode(gitMind);
+        return mindNodeMap;
     }
 
 
-    public Map<String, List<MindNode>> getGitMindNode(GitMind gitMind) {
-        //Map<String, MindNode> mindNodeMap = new HashMap<>();
-        List<GitMindNode> mindNodeList = new ArrayList<>();
+    private List<MindNode> loadGitMindNodes(GitMind gitMind) {
+        List<MindNode> mindNodeList = new ArrayList<>();
         try {
             String token;
             if (gitMind != null) {
@@ -90,31 +93,35 @@ public class GitMindLoader implements MindLoader {
                 token = login(null, null);
             }
             String guid = getGuid(token);
-            List<MindXpath> mindXpaths = gitMind.getMindXpaths();
-            for (MindXpath mindXpath : mindXpaths) {
-                String mindFileName = mindXpath.getMindFileName();
-                Map mindFileNames = getMindFileNames(token, guid, mindFileName);
-                if (mindFileNames != null) {
-                    String mindGuid = (String) mindFileNames.get("guid");
-                    String mindUrl = getMindFileUrl(token, mindGuid);
-                    String mindInfo = getMindInfo(mindUrl);
-                    JSONObject entries = JSONUtil.parseObj(mindInfo);
-                    GitMindNode mindNode = entries.get("root", GitMindNode.class);
-                    //mindNode.setName(mindFileName);
-                    mindNodeList.add(mindNode);
-                    //mindNodeMap.put(mindFileName, mindNode);
-                }
+//            List<MindXpath> mindXpaths = gitMind.getMindXpaths();
+//            Map<String, List<MindNode>> mindNodeMap = new HashMap<>();
+            String mindFileName = gitMind.getFileName();
+            Map mindFileNames = getMindFileNames(token, guid, mindFileName);
+            if (mindFileNames != null) {
+                String mindGuid = (String) mindFileNames.get("guid");
+                String mindUrl = getMindFileUrl(token, mindGuid);
+                String mindInfo = getMindInfo(mindUrl);
+                JSONObject entries = JSONUtil.parseObj(mindInfo);
+                GitMindNode mindNode = entries.get("root", GitMindNode.class);
+
+                mindNodeList = gitMindConverter.convertToMindNodes(mindNode);
+                //mindNodeMap.put(mindFileName, mindNodes);
+
+                //mindNode.setName(mindFileName);
+//                    mindNodeList.add(mindNode);
+                //mindNodeMap.put(mindFileName, mindNode);
             }
-            Map<String, List<MindNode>> mindNodeMap = new HashMap<>();
+            return mindNodeList;
+/*            Map<String, List<MindNode>> mindNodeMap = new HashMap<>();
             for (GitMindNode gitMindNode : mindNodeList) {
                 List<MindNode> mindNodes = gitMindConverter.convertToMindNodes(gitMindNode);
                 //project/d:fff.f:github.radeorg.dows-eaglee/ddd
 //                gitMindNode.getData().
                 String projectName = MindUtil.extractProjectName(gitMindNode.getData().getText());
                 mindNodeMap.put(projectName, mindNodes);
-            }
+            }*/
 
-            return mindNodeMap;
+            //return mindNodeMap;
             /*Map mindFileNames = getMindFileNames(token, guid, buildRequest.getGitmind());
             if (mindFileNames != null) {
                 String mindGuid = (String) mindFileNames.get("guid");
@@ -128,9 +135,9 @@ public class GitMindLoader implements MindLoader {
             //refreshToken();
             log.info("refresh token: {}", e.getMessage());
         }
-        return Map.of();
+//        return Map.of();
+        return mindNodeList;
     }
-
 
 
     public void refreshToken() {

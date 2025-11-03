@@ -22,7 +22,7 @@ public class TxtMindLoader implements MindLoader {
 
 
     @Override
-    public Map<String, List<MindNode>> loadMindProjects(String... projectUri) {
+    public Map<String, List<MindNode>> loadProjectMinds(String... projectUri) {
         return Map.of();
     }
 

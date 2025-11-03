@@ -18,8 +18,12 @@ public class MindReader {
 
     private final Map<String, MindLoader> mindLoaders;
 
+    public List<MindNode> readProjectMind(String projectFile) {
+        MindLoader mindLoader = getMindLoader(projectFile);
+        return mindLoader.loadProjectMind(projectFile);
+    }
 
-    public Map<NodeType, List<MindNode>> getProjectNodeTypeMap(String projectUri) {
+    /*public Map<NodeType, List<MindNode>> getProjectNodeTypeMap(String projectUri) {
         MindLoader mindLoader = getMindLoader(projectUri);
         Map<String, List<MindNode>> projectMindNodes = mindLoader.loadMindProjects(projectUri);
         List<MindNode> mindNodes = projectMindNodes.get(projectUri);
@@ -34,12 +38,8 @@ public class MindReader {
         MindLoader mindLoader = getMindLoader(projectUri);
         List<MindNode> mindNodes = mindLoader.loadProjectMind(projectUri);
         return mindNodes.stream().collect(Collectors.toMap(MindNode::getNodeId, node -> node));
-    }
+    }*/
 
-    public List<MindNode> readProjectMind(String projectUri) {
-        MindLoader mindLoader = getMindLoader(projectUri);
-        return mindLoader.loadProjectMind(projectUri);
-    }
 
 
     /**
